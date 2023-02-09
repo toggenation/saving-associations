@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Chronos\Chronos;
 use Cake\ORM\Entity;
 
 /**
@@ -109,23 +108,6 @@ class DevicesController extends AppController
 
     public function saveAssociated()
     {
-        // $data = $this->request->getData();
-
-        $ports = [
-            [
-                'physical_port' => '1',
-                'port_unit_id' => '1',
-                'port_identity' => '201901',
-                'name' => 'Analog-1',
-            ],
-            [
-                'physical_port' => '2',
-                'port_unit_id' => '1',
-                'port_identity' => '201902',
-                'name' => 'Analog-2',
-            ],
-        ];
-
         $data = [
             'device_status_id' => '3',
             'name' => 'myDevice',
@@ -135,31 +117,27 @@ class DevicesController extends AppController
                     'module_state_id' => '1',
                     'module_class_id' => '12',
                     'module_type_id' => '4',
-                    'ports' => $ports
+                    'ports' => [
+                        '_ids' => [1, 2],
+                    ],
                 ],
             ]
         ];
 
         $device = $this->Devices->newEntity($data, [
+            'accessibleFields' => ['modules' => true],
             'associated' => [
-                // 'Modules',
-                // 'Modules.Ports'
-                'Modules' => [
-                    'accessibleFields' => ['ports' => true],
-                    'associated' => 'Ports'
-                ]
+                'Modules',
+                'Modules.Ports'
             ]
         ]);
 
-        // dd($device);
-
         foreach ($device->modules as $module) {
             foreach ($module->ports as $port) {
-                $port->_joinData = new Entity(['extra_data' => uniqid('hi-james-')]);
+                $port->_joinData = new Entity(['extra_data' => uniqid('hijames-')]);
             }
         }
 
-        // dd($device);
         $entity = $this->Devices->save($device);
 
         if ($entity) {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -48,6 +49,7 @@ class ModulesTable extends Table
             'foreignKey' => 'device_id',
             'joinType' => 'INNER',
         ]);
+
         $this->belongsToMany('Ports', [
             'foreignKey' => 'module_id',
             'targetForeignKey' => 'port_id',
