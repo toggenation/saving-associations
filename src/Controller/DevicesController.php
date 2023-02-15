@@ -146,4 +146,31 @@ class DevicesController extends AppController
 
         dd($device->getErrors());
     }
+
+    public function editAssociated($id = null)
+    {
+        $device = $this->Devices->get($id, [
+            'contain' => [
+                'Modules' => [
+                    'Ports'
+                ]
+            ],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $device = $this->Devices->patchEntity($device, $this->request->getData(), [
+                'associated' => [
+                    'Modules',
+                    'Modules.Ports'
+                ]
+            ]);
+            if ($this->Devices->save($device)) {
+                $this->Flash->success(__('The device has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The device could not be saved. Please, try again.'));
+        }
+
+        $this->set(compact('device'));
+    }
 }

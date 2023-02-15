@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Module $module
@@ -24,12 +25,18 @@
             <fieldset>
                 <legend><?= __('Edit Module') ?></legend>
                 <?php
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('module_state_id');
-                    echo $this->Form->control('module_class_id');
-                    echo $this->Form->control('module_type_id');
-                    echo $this->Form->control('device_id', ['options' => $devices]);
-                    echo $this->Form->control('ports._ids', ['options' => $ports]);
+                echo $this->Form->control('name');
+                echo $this->Form->control('module_state_id', [
+                    'type' => 'text'
+                ]);
+                echo $this->Form->control('module_class_id', [
+                    'type' => 'text'
+                ]);
+                echo $this->Form->control('module_type_id', [
+                    'type' => 'text'
+                ]);
+                echo $this->Form->control('device_id', ['options' => $devices]);
+                echo $this->Form->control('ports._ids', ['options' => $ports]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

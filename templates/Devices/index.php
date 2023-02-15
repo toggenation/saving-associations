@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Device> $devices
@@ -18,17 +19,18 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($devices as $device): ?>
-                <tr>
-                    <td><?= $this->Number->format($device->id) ?></td>
-                    <td><?= $this->Number->format($device->device_status_id) ?></td>
-                    <td><?= h($device->name) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $device->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $device->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $device->id], ['confirm' => __('Are you sure you want to delete # {0}?', $device->id)]) ?>
-                    </td>
-                </tr>
+                <?php foreach ($devices as $device) : ?>
+                    <tr>
+                        <td><?= $this->Number->format($device->id) ?></td>
+                        <td><?= $this->Number->format($device->device_status_id) ?></td>
+                        <td><?= h($device->name) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $device->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $device->id]) ?>
+                            <?= $this->Html->link(__('Edit Assoc'), ['action' => 'editAssociated', $device->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $device->id], ['confirm' => __('Are you sure you want to delete # {0}?', $device->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
